@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습문제(20)</title>
+</head>
+<body>
+    <div id="name" draggable="true" ><h1>Raghad</h1></div>
+    <div id="message" style="font-size: 20px; color: blue;"></div>
+
+    <script type="text/javascript">
+        var dragging = false;
+
+        var nameId = document.getElementById("name");
+        var message = document.getElementById("message");
+        var dragCounter = 0;
+        
+        nameId.addEventListener("dragstart", function(e) {
+            dragCounter = 1;
+            dragging = true;
+            message.innerHTML = "드래그시작[1]";
+        });
+
+        nameId.addEventListener('drag', function(e) {
+            if (dragging) {
+                dragCounter++;
+                message.innerHTML = "드래그시작[" + dragCounter + "]";
+            }
+        });
+
+        nameId.addEventListener('dragend', function(e) {
+            dragging = false;
+            message.innerHTML = "드래그 가능";
+        });
+    </script>
+</body>
+</html>

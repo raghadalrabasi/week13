@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실습문제(22)</title>
+</head>
+<body>
+    <p>숙명여대(위도,경도): <br/> 37.5459582, 126.9625</p>
+    <p id="currentLocation"></p>
+    <p id="distance"></p>
+
+    <script>
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; 
+            var dLat = (lat2 - lat1).toRad(); 
+            var dLon = (lon2 - lon1).toRad(); 
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+            var distance = R * c; 
+            return distance;
+        }
+        Number.prototype.toRad = function() {
+            return this * Math.PI / 180;
+        };
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var userLat = position.coords.latitude;
+                var userLon = position.coords.longitude;
+                var sukjongLat = 37.5459582; 
+                var sukjongLon = 126.9625;  
+
+                var distance = calculateDistance(userLat, userLon, sukjongLat, sukjongLon);
+                document.getElementById("currentLocation").innerHTML = "현재 위치(위도,경도):" +"<br/>" + userLat + "," + userLon;
+                document.getElementById("distance").innerHTML = "측정 거리: " +"<br/>"+ distance + " km";
+            })}
+    </script>
+</body>
+</html>
+
+
+
+
